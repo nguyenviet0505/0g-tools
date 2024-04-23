@@ -1,6 +1,6 @@
-**Xuất privatekey**:
+**Xuất privatekey**: // Thay đổi tên ví "josephtran"
 ```
-evmosd keys unsafe-export-eth-key josephtran
+evmosd keys unsafe-export-eth-key "josephtran"
 ```
 **List tất cả các ví đã tạo:**
 ```
@@ -17,34 +17,40 @@ evmosd q bank balances $(evmosd keys show josephtran03 -a)
 evmosd debug addr "evmos198cn8hrzqwz07852jdwvjvpzzgfnurcdtj7scz"  
 ```
 
-**Send token:** //amount: 9900000000000000aevmos (1evmos = 1.10*18aevmos)
+**Send token từ ví này sang ví khác:** //amount: 9900000000000000aevmos (1evmos = 1.10*18aevmos)
 ```
 evmosd tx bank send "evmos12hxz5nyfp6r44mcaj67d3g77ypgyegemq6u4xn" "evmos1vtc5tgx3z56aly3pxjvasgjhypzmqqenjm8d0j" 100000000000000000aevmos --gas=500000 --gas-prices=99999aevmos -y
-
-evmosd tx bank send "evmos1vtc5tgx3z56aly3pxjvasgjhypzmqqenjm8d0j" "evmos12hxz5nyfp6r44mcaj67d3g77ypgyegemq6u4xn" 5000000000000000000aevmos --gas=500000 --gas-prices=99999aevmos -y
 ```
-evmosd q bank balances $(evmosd keys show Chicharito -a)
-
-**Vote Proposal:**
+**Lấy số dư ví:** // Đổi tên ví "josephtran"
 ```
-evmosd tx gov vote 4 yes --from josephtran --gas=500000 --gas-prices=99999aevmos -y 
+evmosd q bank balances $(evmosd keys show josephtran -a)
+```
+hoặc:
+```
+evmosd q bank balances "evmos198cn8hrzqwz07852jdwvjvpzzgfnurcdtj7scz" 
 ```
 
-**Tạo Validator mới:**
+**Vote Proposal:** // Đổi tên ví ký vote proposal
+```
+evmosd tx gov vote 4 yes --from "josephtran" --gas=500000 --gas-prices=99999aevmos -y 
+```
+
+**Tạo Validator mới:** //Thay thế --moniker="tên node", tên ví ký: --from: "tên ví", --amount="số lượng token", --commission-rate="số % commission"
 ```
 evmosd tx staking create-validator \
   --amount=100000000000000000aevmos \
   --pubkey=$(evmosd tendermint show-validator) \
   --moniker="josephtran" \
   --chain-id=zgtendermint_9000-1 \
-  --commission-rate="0.10" \
+  --commission-rate="0.05" \
   --commission-max-rate="0.20" \
   --commission-max-change-rate="0.01" \
   --min-self-delegation="1000000" \
   --gas="5000000" \
   --gas-prices="30aevmos" \
-  --from=Chicharito
+  --from=josephtran
 ```
+
 
 **Check node status**:
 ```
@@ -58,34 +64,41 @@ evmosd keys show "josephtran" --bech val -a
 
 **Lấy thông số Validator:** //Đổi địa chỉ Validator
 ```
-evmosd query staking validator evmosvaloper12hxz5nyfp6r44mcaj67d3g77ypgyegemd5n98w
+evmosd query staking validator "evmosvaloper12hxz5nyfp6r44mcaj67d3g77ypgyegemd5n98w"
 ```
 
 
 
-**Delegate to Validator:**
+**Delegate to Validator:** 
 
 ```
-evmosd tx staking delegate $(evmosd keys show "josephtran" --bech val -a)  4900000000000000000aevmos --from "josephtran52" --gas=500000 --gas-prices=99999aevmos -y
-```
-```
-evmosd tx staking redelegate valoper_from valoper_to 100aevmosd --from wallet_name --gas=500000 --gas-prices=99999aevmos -y
+evmosd tx staking delegate $(evmosd keys show "tên node" --bech val -a)  4900000000000000000aevmos --from "tên ví" --gas=500000 --gas-prices=99999aevmos -y
 ```
 Example:
 ```
-evmosd tx staking delegate $(evmosd keys show josephtran --bech val -a)  99995000000000000aevmos --from josephtran06 --gas=500000 --gas-prices=99999aevmos -y
+evmosd tx staking delegate $(evmosd keys show "josephtran" --bech val -a)  4900000000000000000aevmos --from "josephtran" --gas=500000 --gas-prices=99999aevmos -y
 ```
+
+**Delegate sang Validator khác:** 
+```
+evmosd tx staking redelegate "valoper_from" "valoper_to" 100aevmosd --from wallet_name --gas=500000 --gas-prices=99999aevmos -y
+```
+
 **Unbond**:
 ```
-evmosd tx staking unbond $(evmosd keys show josephtran --bech val -a)  10000000000000000aevmos --from josephtran46 --gas=500000 --gas-prices=99999aevmos -y
+evmosd tx staking unbond $(evmosd keys show "josephtran" --bech val -a)  10000000000000000aevmos --from "josephtran46" --gas=500000 --gas-prices=99999aevmos -y
 ```
 
 **Unjail:**
 ```
 evmosd tx slashing unjail --from $WALLET_NAME --gas=500000 --gas-prices=99999aevmos -y
 ```
+Example:
+```
+evmosd tx slashing unjail --from josephtran --gas=500000 --gas-prices=99999aevmos -y
+```
 
-**Miner ID:**
+**Lấy Miner ID:**
 ```
 echo -n $Wallet_Name | sha256sum
 ```
