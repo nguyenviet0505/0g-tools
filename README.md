@@ -150,7 +150,7 @@ make install
 evmosd version
 ```
 
-###3. (Thay thế link git bên trên bị lỗi):
+### 3. (Thay thế link git bên trên bị lỗi):
 ```
 wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
 chmod +x ./evmosd
