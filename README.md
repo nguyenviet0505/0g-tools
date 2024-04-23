@@ -178,6 +178,11 @@ evmosd config keyring-backend os # You can set it to "test" so you will not be a
 ```bash
 wget https://github.com/0glabs/0g-evmos/releases/download/v1.0.0-testnet/genesis.json -O $HOME/.evmosd/config/genesis.json
 ```
+### 6. Thay thế link bên trên bị lỗi:
+```
+wget https://rpc-zero-gravity-testnet.trusted-point.com/genesis.json -O $HOME/.evmosd/config/genesis.json
+```
+
 ### 7. Add seeds and peers to the config.toml
 ```bash
 PEERS="1248487ea585730cdf5d3c32e0c2a43ad0cda973@peer-zero-gravity-testnet.trusted-point.com:26326" && \
