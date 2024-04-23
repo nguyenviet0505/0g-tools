@@ -149,6 +149,14 @@ git checkout v1.0.0-testnet
 make install
 evmosd version
 ```
+
+###3. (Thay thế link git bên trên bị lỗi):
+```
+wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
+chmod +x ./evmosd
+mv ./evmosd /usr/local/bin/
+evmosd version
+```
 ### 4. Set up variables
 ```bash
 # Customize if you need
