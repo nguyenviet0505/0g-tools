@@ -141,7 +141,7 @@ echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
 source ~/.bash_profile && \
 go version
 ```
-### 3. Download evmosd (Đã thay thế link git bên trên bị lỗi):
+### 3. Download và cài evmosd (Đã thay thế link git bên trên bị lỗi):
 ```
 wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
 chmod +x ./evmosd
