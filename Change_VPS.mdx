@@ -193,7 +193,7 @@ sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
 ```bash
 evmosd status | jq .SyncInfo
 ```
-### 9. Sau khi node đã sync xong bắt kịp block --> Copy Wallet từ VPS cũ qua VPS mới (các file copy bao gồm: các file có đuôi .address. .info, và file keyhash)
+### 9. Sau khi node đã sync xong bắt kịp block --> Copy Wallet từ VPS cũ qua VPS mới (các file copy bao gồm: các file có đuôi `.address`, `.info`, và file `keyhash`)
 - Các file này sẽ nằm tại đường dẫn trên VPS cũ: `/root/.evmosd`
 - Trên VPS cũ vào đường dẫn chứa các file trên để kiểm tra: `cd /root/.evmosd`
 - Gõ lệnh `ls` để hiện các file. Kết quả tương tự như sau:
