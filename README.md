@@ -141,16 +141,7 @@ echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
 source ~/.bash_profile && \
 go version
 ```
-### 3. Build `evmosd` binary
-```bash
-git clone https://github.com/0glabs/0g-evmos.git
-cd 0g-evmos
-git checkout v1.0.0-testnet
-make install
-evmosd version
-```
-
-### 3. (Thay thế link git bên trên bị lỗi):
+### 3. Download evmosd (Đã thay thế link git bên trên bị lỗi):
 ```
 wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
 chmod +x ./evmosd
@@ -174,11 +165,7 @@ evmosd config chain-id $CHAIN_ID
 evmosd config node tcp://localhost:$RPC_PORT
 evmosd config keyring-backend os # You can set it to "test" so you will not be asked for a password
 ```
-### 6. Download genesis.json
-```bash
-wget https://github.com/0glabs/0g-evmos/releases/download/v1.0.0-testnet/genesis.json -O $HOME/.evmosd/config/genesis.json
-```
-### 6. Thay thế link bên trên bị lỗi:
+### 6. Download genesis.json (Đã thay thế link bên trên bị lỗi):
 ```
 wget https://rpc-zero-gravity-testnet.trusted-point.com/genesis.json -O $HOME/.evmosd/config/genesis.json
 ```
