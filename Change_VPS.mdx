@@ -1,0 +1,294 @@
+[<img src='assets\guide-banner.png' alt='banner' width= '99.9%'>]()
+
+<font size = 7><center><b><u>About Zero Gravity (0G)</u></b></center></font>
+
+* ### **[Zero Gravity](https://0g.ai/)** is a pioneering data availability system featuring a decentralized storage layer designed for super scalability and security.
+
+* ### By segregating data availability workflows into distinct publishing and storage lanes, 0G optimizes scalability through efficient partitioning while ensuring data availability through consensus-based sampling, mitigating broadcasting bottlenecks. 
+
+* ### Its incentive-based storage mechanism fosters network participation, promoting scalability and enabling support for diverse data types across Layer 2 networks and decentralized AI platforms. network.
+
+<div align="center">
+  <a href="https://0g.ai/"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/85aaef48-7ea4-4857-b339-985645c6850c" alt="0G Website" width="16%"></a>
+  <a href="https://github.com/0glabs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/229ec400-72ff-48ee-ac18-7bdb1f5e221a" alt="0G Github" width="16%"></a>
+  <a href="https://twitter.com/0G_labs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/3978b7fc-d575-44a6-8d41-327c14c8ba31" alt="0G Twitter" width="16%"></a>
+  <a href="https://discord.gg/0glabs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/944a0b87-548d-4109-ad0c-def572d307cb" alt="0G Discord" width="16%"></a>
+  <a href="https://blog.0g.ai/"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/ac52729b-64d7-44d1-9a66-1e0d159848f6" alt="0G Blog" width="16.2%"></a>
+</div>
+
+## Navigation
+
+- [Navigation](#navigation)
+- [Hardware requirements](#hardware-requirements)
+- [TrustedPoint Services](#trustedpoint-services)
+- [Installation guide](#installation-guide)
+  - [1. Install required packages](#1-install-required-packages)
+  - [2. Install Go](#2-install-go)
+  - [3. Build `evmosd` binary](#3-build-evmosd-binary)
+  - [4. Set up variables](#4-set-up-variables)
+  - [5. Intitialize the node](#5-intitialize-the-node)
+  - [6. Download genesis.json](#6-download-genesisjson)
+  - [7. Add seeds and peers to the config.toml](#7-add-seeds-and-peers-to-the-configtoml)
+  - [8. Change ports (Optional)](#8-change-ports-optional)
+  - [9. Configure prunning to save storage (Optional)](#9-configure-prunning-to-save-storage-optional)
+  - [10. Set min gas price](#10-set-min-gas-price)
+  - [11. Enable indexer (Optional)](#11-enable-indexer-optional)
+  - [12. Create a service file](#12-create-a-service-file)
+  - [13. Start the node](#13-start-the-node)
+  - [14. Create a wallet for your validator](#14-create-a-wallet-for-your-validator)
+  - [15. Extract the HEX address to request some tokens from the faucet](#15-extract-the-hex-address-to-request-some-tokens-from-the-faucet)
+  - [16. Request tokens from the faucet](#16-request-tokens-from-the-faucet)
+  - [17. Check wallet balance](#17-check-wallet-balance)
+  - [18. Create a validator](#18-create-a-validator)
+- [State sync](#state-sync)
+  - [1. Stop the node](#1-stop-the-node)
+  - [2. Backup priv\_validator\_state.json](#2-backup-priv_validator_statejson)
+  - [3. Reset DB](#3-reset-db)
+  - [4. Setup required variables (One command)](#4-setup-required-variables-one-command)
+  - [4. Move priv\_validator\_state.json back](#4-move-priv_validator_statejson-back)
+  - [5. Start the node](#5-start-the-node)
+  - [6. Check the synchronization status](#6-check-the-synchronization-status)
+  - [7. Disable state sync](#7-disable-state-sync)
+- [Download fresh addrbook.json](#download-fresh-addrbookjson)
+  - [1. Stop the node and use `wget` to download the file](#1-stop-the-node-and-use-wget-to-download-the-file)
+  - [2. Restart the node](#2-restart-the-node)
+  - [3. Check the synchronization status](#3-check-the-synchronization-status)
+- [Add fresh persistent peers](#add-fresh-persistent-peers)
+  - [1. Extract persistent\_peers from our endpoint](#1-extract-persistent_peers-from-our-endpoint)
+  - [2. Restart the node](#2-restart-the-node-1)
+  - [3. Check the synchronization status](#3-check-the-synchronization-status-1)
+- [Download Snapshot](#download-snapshot)
+  - [1. Download latest snapshot from our endpoint](#1-download-latest-snapshot-from-our-endpoint)
+  - [2. Stop the node](#2-stop-the-node)
+  - [3. Backup priv\_validator\_state.json](#3-backup-priv_validator_statejson)
+  - [4. Reset DB](#4-reset-db)
+  - [5. Extract files fromt the arvhive](#5-extract-files-fromt-the-arvhive)
+  - [6. Move priv\_validator\_state.json back](#6-move-priv_validator_statejson-back)
+  - [7. Restart the node](#7-restart-the-node)
+  - [8. Check the synchronization status](#8-check-the-synchronization-status)
+- [Useful commands](#useful-commands)
+  - [Check node status](#check-node-status)
+  - [Query your validator](#query-your-validator)
+  - [Query missed blocks counter \& jail details of your validator](#query-missed-blocks-counter--jail-details-of-your-validator)
+  - [Unjail your validator](#unjail-your-validator)
+  - [Delegate tokens to your validator](#delegate-tokens-to-your-validator)
+  - [Get your p2p peer address](#get-your-p2p-peer-address)
+  - [Edit your validator](#edit-your-validator)
+  - [Send tokens between wallets](#send-tokens-between-wallets)
+  - [Query your wallet balance](#query-your-wallet-balance)
+  - [Monitor server load](#monitor-server-load)
+  - [Query active validators](#query-active-validators)
+  - [Query inactive validators](#query-inactive-validators)
+  - [Check logs of the node](#check-logs-of-the-node)
+  - [Restart the node](#restart-the-node)
+  - [Stop the node](#stop-the-node)
+  - [Upgrade the node](#upgrade-the-node)
+  - [Delete the node from the server](#delete-the-node-from-the-server)
+  - [Example gRPC usage](#example-grpc-usage)
+  - [Example REST API query](#example-rest-api-query)
+- [Monitoring](#monitoring)
+
+
+
+## Hardware requirements
+```py
+- Memory: 8 GB RAM
+- CPU: 4 cores
+- Disk: 500 GB NVME SSD
+- Bandwidth: 100mbps Gbps for Download / Upload
+- Linux amd64 arm64 (The guide was tested on Ubuntu 20.04 LTS)
+```
+## TrustedPoint Services
+
+| Parameter | Value
+|-|-
+| indexing | kv
+| pruning | custom (100/50)
+| min-retain-blocks | 0
+| snapshot-interval | 2000
+| snapshot-keep-recent | 2
+| minimum-gas-prices | 0.00252aevmos
+
+---
+- RPC: https://rpc-zero-gravity-testnet.trusted-point.com:443
+- REST API: https://api-zero-gravity-testnet.trusted-point.com:443
+- WSS: wss://rpc-zero-gravity-testnet.trusted-point.com:443/websocket
+- gRPC: http://grpc-zero-gravity-testnet:9295
+- P2P Persistent Peer: 1248487ea585730cdf5d3c32e0c2a43ad0cda973@peer-zero-gravity-testnet.trusted-point.com:26326
+- EVM RPC: https://evm-rpc-zero-gravity-testnet.trusted-point.com:443
+---
+- State sync: [Guide](#state-sync)
+- Fresh Snapshot: [URL](https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4) / [Guide](#download-snapshot) **(Being updated every 3 hours)**
+- Fresh addrbook: [URL](https://rpc-zero-gravity-testnet.trusted-point.com/addrbook.json) / [Guide](#download-fresh-addrbookjson) **(Being updated every 5 minutes)**
+- Live Peers scanner: [URL](https://rpc-zero-gravity-testnet.trusted-point.com/peers.txt) / [Guide](#add-fresh-persistent-peers) **(Being updated every 5 minutes)**
+
+## Installation guide
+
+### 1. Install required packages
+```bash
+sudo apt update && \
+sudo apt install curl git jq build-essential gcc unzip wget lz4 -y
+```
+### 2. Install Go
+```bash
+cd $HOME && \
+ver="1.21.3" && \
+wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
+sudo rm -rf /usr/local/go && \
+sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
+rm "go$ver.linux-amd64.tar.gz" && \
+echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
+source ~/.bash_profile && \
+go version
+```
+### 3. Tải evmosd: ( Đã thay thế link git cũ bị lỗi):
+```
+wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
+chmod +x ./evmosd
+mv ./evmosd /usr/local/bin/
+evmosd version
+```
+### 4. Set up variables
+```bash
+# Customize if you need
+echo 'export MONIKER="My_Node"' >> ~/.bash_profile
+echo 'export CHAIN_ID="zgtendermint_9000-1"' >> ~/.bash_profile
+echo 'export WALLET_NAME="wallet"' >> ~/.bash_profile
+echo 'export RPC_PORT="26657"' >> ~/.bash_profile
+source $HOME/.bash_profile
+```
+### 5. Initialize the node
+```bash
+cd $HOME
+evmosd init $MONIKER --chain-id $CHAIN_ID
+evmosd config chain-id $CHAIN_ID
+evmosd config node tcp://localhost:$RPC_PORT
+evmosd config keyring-backend os # You can set it to "test" so you will not be asked for a password
+```
+### 6. Download file genesis.json:
+```
+wget https://rpc-zero-gravity-testnet.trusted-point.com/genesis.json -O $HOME/.evmosd/config/genesis.json
+```
+
+### 7. Add seeds and peers to the config.toml
+```bash
+PEERS="1248487ea585730cdf5d3c32e0c2a43ad0cda973@peer-zero-gravity-testnet.trusted-point.com:26326" && \
+SEEDS="8c01665f88896bca44e8902a30e4278bed08033f@54.241.167.190:26656,b288e8b37f4b0dbd9a03e8ce926cd9c801aacf27@54.176.175.48:26656,8e20e8e88d504e67c7a3a58c2ea31d965aa2a890@54.193.250.204:26656,e50ac888b35175bfd4f999697bdeb5b7b52bfc06@54.215.187.94:26656" && \
+sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.evmosd/config/config.toml
+```
+### 8. Change ports (Optional)
+```bash
+# Customize if you need
+EXTERNAL_IP=$(wget -qO- eth0.me) \
+PROXY_APP_PORT=26658 \
+P2P_PORT=26656 \
+PPROF_PORT=6060 \
+API_PORT=1317 \
+GRPC_PORT=9090 \
+GRPC_WEB_PORT=9091
+```
+```bash
+sed -i \
+    -e "s/\(proxy_app = \"tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:$PROXY_APP_PORT\"/" \
+    -e "s/\(laddr = \"tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:$RPC_PORT\"/" \
+    -e "s/\(pprof_laddr = \"\)\([^:]*\):\([0-9]*\).*/\1localhost:$PPROF_PORT\"/" \
+    -e "/\[p2p\]/,/^\[/{s/\(laddr = \"tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:$P2P_PORT\"/}" \
+    -e "/\[p2p\]/,/^\[/{s/\(external_address = \"\)\([^:]*\):\([0-9]*\).*/\1${EXTERNAL_IP}:$P2P_PORT\"/; t; s/\(external_address = \"\).*/\1${EXTERNAL_IP}:$P2P_PORT\"/}" \
+    $HOME/.evmosd/config/config.toml
+```
+```bash
+sed -i \
+    -e "/\[api\]/,/^\[/{s/\(address = \"tcp:\/\/\)\([^:]*\):\([0-9]*\)\(\".*\)/\1\2:$API_PORT\4/}" \
+    -e "/\[grpc\]/,/^\[/{s/\(address = \"\)\([^:]*\):\([0-9]*\)\(\".*\)/\1\2:$GRPC_PORT\4/}" \
+    -e "/\[grpc-web\]/,/^\[/{s/\(address = \"\)\([^:]*\):\([0-9]*\)\(\".*\)/\1\2:$GRPC_WEB_PORT\4/}" $HOME/.evmosd/config/app.toml
+```
+### 9. Configure prunning to save storage (Optional)
+```bash
+sed -i.bak -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.evmosd/config/app.toml
+sed -i.bak -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.evmosd/config/app.toml
+sed -i.bak -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" $HOME/.evmosd/config/app.toml
+```
+
+### 10. Set min gas price 
+```bash
+sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.00252aevmos\"/" $HOME/.evmosd/config/app.toml
+```
+### 11. Enable indexer (Optional)
+```bash
+sed -i "s/^indexer *=.*/indexer = \"kv\"/" $HOME/.evmosd/config/config.toml
+```
+### 12. Create a service file
+```bash
+sudo tee /etc/systemd/system/ogd.service > /dev/null <<EOF
+[Unit]
+Description=OG Node
+After=network.target
+
+[Service]
+User=$USER
+Type=simple
+ExecStart=$(which evmosd) start --home $HOME/.evmosd
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+### 13. Download file snapshot:
+```bash
+wget https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
+```
+### 2. Stop the node bên VPS cũ
+```bash
+sudo systemctl stop ogd
+```
+### 3. Backup priv_validator_state.json 
+```bash
+cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
+```
+### 4. Reset DB
+```bash
+evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
+```
+### 5. Giải nén file snapshot ra:
+```bash
+lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.evmosd
+```
+### 6. Copy file: priv_validator_state.json từ VPS qua VPS mới:
+```bash
+scp -r root@"IP_VPS_cũ":/root/.evmosd/config/priv_validator_key.json root@"IP_VPS_mới":/root/.evmosd/config
+```
+### 7. Restart the node
+```bash
+sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+```
+### 8. Check the synchronization status (check lại tình trạng node đã sync)
+```bash
+evmosd status | jq .SyncInfo
+```
+### 9. Sau khi node đã sync xong bắt kịp block --> Copy Wallet từ VPS cũ qua VPS mới (các file copy bao gồm: các file có đuôi .address. .info, và file keyhash)
+- Các file này sẽ nằm tại đường dẫn trên VPS cũ: `/root/.evmosd`
+- Trên VPS cũ vào đường dẫn chứa các file trên để kiểm tra: `cd /root/.evmosd`
+- Gõ lệnh `ls` để hiện các file. Kết quả tương tự như sau:
+```
+root@vultr  ~  cd /root/.evmosd
+ ⚡ root@vultr  ~/.evmosd  ls
+fefrefreftry6y6h6y6y6yce021e6c09f0b9d0eb.address  config  joseph01.info  keyhash
+ayỵugvrefreeiurtgtgti821e1ccc1fbf395e383.address  data    joseph02.info  priv_validator_state.json.backup
+```
+- Tiến hành copy các file (lúc này đứng tại VPS cũ):
+
+```bash
+scp -r root@"IP_VPS_cũ":'/root/.evmosd/*.info' root@"IP_VPS_mới":/root/.evmosd/
+```
+```bash
+scp -r root@"IP_VPS_cũ":'/root/.evmosd/*.address' root@"IP_VPS_mới":/root/.evmosd/
+```
+```bash
+scp -r root@"IP_VPS_cũ":/root/.evmosd/keyhash root@"IP_VPS_mới":/root/.evmosd/
+```
+- Kiểm tra lại các ví:
+```bash
+evmosd keys list
+```
