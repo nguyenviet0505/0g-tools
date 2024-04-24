@@ -165,37 +165,37 @@ EOF
 ```bash
 wget https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
 ```
-### 2. Stop the node bên VPS cũ
+### 14. Stop the node bên VPS cũ
 ```bash
 sudo systemctl stop ogd
 ```
-### 3. Backup priv_validator_state.json 
+### 15. Backup priv_validator_state.json 
 ```bash
 cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
 ```
-### 4. Reset DB
+### 16. Reset DB
 ```bash
 evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
 ```
-### 5. Giải nén file snapshot ra:
+### 17. Giải nén file snapshot ra:
 ```bash
 lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.evmosd
 ```
-### 6. Copy file: priv_validator_state.json từ VPS cũ qua VPS mới (Đứng tại VPS cũ):
+### 18. Restart the node và chờ node sync xong đầy đủ:
+```bash
+sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+```
+### 19. Check the synchronization status (check lại tình trạng node đã sync)
+```bash
+evmosd status | jq .SyncInfo
+```
+### 20. Copy file: priv_validator_state.json từ VPS cũ qua VPS mới (Đứng tại VPS cũ):
 **Lưu ý quan trọng:* Trước khi copy key phải chắc chắn đã dừng node bên VPS cũ
 
 ```bash
 scp -r root@"IP_VPS_cũ":/root/.evmosd/config/priv_validator_key.json root@"IP_VPS_mới":/root/.evmosd/config
 ```
-### 7. Restart the node
-```bash
-sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
-```
-### 8. Check the synchronization status (check lại tình trạng node đã sync)
-```bash
-evmosd status | jq .SyncInfo
-```
-### 9. Sau khi node đã sync xong bắt kịp block --> Copy Wallet từ VPS cũ qua VPS mới (các file copy bao gồm: các file có đuôi `.address`, `.info`, và file `keyhash`)
+### 21. Sau khi node đã sync xong bắt kịp block --> Copy Wallet từ VPS cũ qua VPS mới (các file copy bao gồm: các file có đuôi `.address`, `.info`, và file `keyhash`)
 - Các file này sẽ nằm tại đường dẫn trên VPS cũ: `/root/.evmosd`
 - Trên VPS cũ vào đường dẫn chứa các file trên để kiểm tra: `cd /root/.evmosd`
 - Gõ lệnh `ls` để hiện các file. Kết quả tương tự như sau:
