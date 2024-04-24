@@ -181,7 +181,7 @@ evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
 ```bash
 lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.evmosd
 ```
-### 6. Copy file: priv_validator_state.json từ VPS cũ qua VPS mới:
+### 6. Copy file: priv_validator_state.json từ VPS cũ qua VPS mới (Đứng tại VPS cũ):
 **Lưu ý quan trọng:* Trước khi copy key phải chắc chắn đã dừng node bên VPS cũ
 
 ```bash
