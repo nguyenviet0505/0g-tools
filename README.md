@@ -248,7 +248,7 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 EOF
 ```
-### 13. Start the node
+### 13. Start the node: (Bước này sync node thủ công nên chuyển qua download bản snapshot theo link bên dưới cho nhanh hơn).
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable ogd && \
