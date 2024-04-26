@@ -106,8 +106,13 @@ Example:
 ```
 evmosd tx slashing unjail --from josephtran --gas=500000 --gas-prices=99999aevmos -y
 ```
+**Withdraw:**
+```bash
+evmosd tx distribution withdraw-all-rewards --from $WALLET_NAME --gas=500000 --gas-prices=99999aevmos -y
+```
 
 **Lấy Miner ID:**
 ```
 echo -n $Wallet_Name | sha256sum
 ```
+
