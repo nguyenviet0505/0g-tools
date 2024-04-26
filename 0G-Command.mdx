@@ -78,10 +78,10 @@ evmosd query staking validator "evmosvaloper12hxz5nyfp6r44mcaj67d3g77ypgyegemd5n
 
 
 
-**Delegate to Validator:** 
+**Delegate to Validator:** Có thể sử dụng đơn vị evmos hoặc aevmos
 
 ```
-evmosd tx staking delegate $(evmosd keys show "tên node" --bech val -a)  4900000000000000000aevmos --from "tên ví" --gas=500000 --gas-prices=99999aevmos -y
+evmosd tx staking delegate $(evmosd keys show "tên node" --bech val -a)  <amount>evmos --from "tên ví" --gas=500000 --gas-prices=99999aevmos -y
 ```
 Example: Sử dụng đơn vị evmos
 ```
